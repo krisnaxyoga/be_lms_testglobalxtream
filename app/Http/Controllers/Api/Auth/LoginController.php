@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 
+use Tymon\JWTAuth\Facades\JWTAuth;
+
 class LoginController extends Controller
 {
     public function login(Request $request)
@@ -51,14 +53,15 @@ class LoginController extends Controller
     public function logout(Request $request)
     {
         try {
-            $user = $request->user();
+            $removeToken = JWTAuth::invalidate(JWTAuth::getToken());
 
-            $user->currentAccessToken()->delete();
-
-            return response()->json([
-                'success' => true,
-                'message' => 'Logout successful'
-            ], 200);
+            if($removeToken) {
+                //return response JSON
+                return response()->json([
+                    'success' => true,
+                    'message' => 'Logout successful',
+                ]);
+            }
         } catch (\Throwable $th) {
             return response()->json([
                 'error' => 'Internal Server Error',
