@@ -8,4 +8,6 @@ use Illuminate\Database\Eloquent\Model;
 class lead_statuses extends Model
 {
     use HasFactory;
+
+    protected $guarded = [];
 }

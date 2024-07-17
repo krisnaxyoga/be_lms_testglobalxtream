@@ -8,9 +8,10 @@ use Illuminate\Database\Eloquent\Model;
 class lead_channels extends Model
 {
     use HasFactory;
-    
+    protected $guarded = [];
+
     public function lead_medias(){
         return $this->hasMany(lead_medias::class);
     }
-    
+
 }

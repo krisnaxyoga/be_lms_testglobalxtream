@@ -8,4 +8,5 @@ use Illuminate\Database\Eloquent\Model;
 class lead_probabilities extends Model
 {
     use HasFactory;
+    protected $guarded = [];
 }

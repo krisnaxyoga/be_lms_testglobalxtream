@@ -4,62 +4,113 @@ namespace App\Http\Controllers\Api\Master;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Models\lead_medias;
+use App\Http\Resources\PostResource;
 
 class LeadMediasController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Retrieve all the lead medias.
      */
     public function index()
     {
-        //
+        try {
+            $leadMedias = lead_medias::all();
+            return PostResource::collection($leadMedias);
+        } catch (\Throwable $th) {
+            return response()->json([
+                'error' => 'Internal Server Error',
+                'message' => $th->getMessage(),
+            ], 500);
+        }
     }
 
     /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
+     * Store a newly created lead media in storage.
      */
     public function store(Request $request)
     {
-        //
+        try {
+            $data = lead_medias::create([
+                'name' => $request->name,
+                'channel_id' => $request->channel_id,
+            ]);
+
+            return new PostResource(true, 'Lead Media Added Successfully', $data);
+        } catch (\Throwable $th) {
+            return response()->json([
+                'error' => 'Internal Server Error',
+                'message' => $th->getMessage(),
+            ], 500);
+        }
     }
 
     /**
-     * Display the specified resource.
+     * Retrieve a specific lead media.
      */
     public function show(string $id)
     {
-        //
+        try {
+            $data = lead_medias::findOrFail($id);
+
+            if (!$data) {
+                return response()->json([
+                    'error' => 'Data not found',
+                ], 404);
+            }
+
+            return new PostResource(true, 'Lead Media Found', $data);
+        } catch (\Throwable $th) {
+            return response()->json([
+                'error' => 'Internal Server Error',
+                'message' => $th->getMessage(),
+            ], 500);
+        }
     }
 
     /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
+     * Update a specific lead media in storage.
      */
     public function update(Request $request, string $id)
     {
-        //
+        try {
+            $data = lead_medias::findOrFail($id);
+
+            if (!$data) {
+                return response()->json([
+                    'error' => 'Data not found',
+                ], 404);
+            }
+
+            $data->update([
+                'name' => $request->name,
+                'channel_id' => $request->channel_id,
+            ]);
+
+            return new PostResource(true, 'Lead Media Updated Successfully', $data);
+        } catch (\Throwable $th) {
+            return response()->json([
+                'error' => 'Internal Server Error',
+                'message' => $th->getMessage(),
+            ], 500);
+        }
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Remove a specific lead media from storage.
      */
     public function destroy(string $id)
     {
-        //
+        try {
+            $data=lead_medias::destroy($id);
+
+            return new PostResource(true, 'Lead Media Deleted Successfully', $data);
+        } catch (\Throwable $th) {
+            return response()->json([
+                'error' => 'Internal Server Error',
+                'message' => $th->getMessage(),
+            ], 500);
+        }
     }
 }
+

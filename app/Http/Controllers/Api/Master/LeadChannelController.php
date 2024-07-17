@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Api\Master;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Models\lead_channels;
+use App\Http\Resources\PostResource;
 
 class LeadChannelController extends Controller
 {
@@ -12,15 +14,16 @@ class LeadChannelController extends Controller
      */
     public function index()
     {
-        //
-    }
+        try {
+            $data = lead_channels::all();
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
+            return new PostResource(true, 'List Data lead channels', $data);
+        } catch (\Throwable $th) {
+            return response()->json([
+                'error' => 'Internal Server Error',
+                'message' => $th->getMessage(),
+            ], 500);
+        }
     }
 
     /**
@@ -28,7 +31,16 @@ class LeadChannelController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        try {
+            $lead_channel = lead_channels::create($request->all());
+
+            return new PostResource(true, 'Data Added Successfully', $lead_channel);
+        } catch (\Throwable $th) {
+            return response()->json([
+                'error' => 'Internal Server Error',
+                'message' => $th->getMessage(),
+            ], 500);
+        }
     }
 
     /**
@@ -36,15 +48,21 @@ class LeadChannelController extends Controller
      */
     public function show(string $id)
     {
-        //
-    }
+        try {
+            $data = lead_channels::findOrFail($id);
+            if (!$data) {
+                return response()->json([
+                    'error' => 'Data not found',
+                ], 404);
+            }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
+            return new PostResource(true, 'Detail Data lead channel', $data);
+        } catch (\Throwable $th) {
+            return response()->json([
+                'error' => 'Internal Server Error',
+                'message' => $th->getMessage(),
+            ], 500);
+        }
     }
 
     /**
@@ -52,7 +70,22 @@ class LeadChannelController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        try {
+            $data = lead_channels::findOrFail($id);
+            if (!$data) {
+                return response()->json([
+                    'error' => 'Data not found',
+                ], 404);
+            }
+            $data->update($request->all());
+
+            return new PostResource(true, 'Data Updated Successfully', $data);
+        } catch (\Throwable $th) {
+            return response()->json([
+                'error' => 'Internal Server Error',
+                'message' => $th->getMessage(),
+            ], 500);
+        }
     }
 
     /**
@@ -60,6 +93,17 @@ class LeadChannelController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        try {
+            $lead_channel = lead_channels::findOrFail($id);
+            $lead_channel->delete();
+
+            return new PostResource(true, 'Data Deleted Successfully', $lead_channel);
+        } catch (\Throwable $th) {
+            return response()->json([
+                'error' => 'Internal Server Error',
+                'message' => $th->getMessage(),
+            ], 500);
+        }
     }
 }
+

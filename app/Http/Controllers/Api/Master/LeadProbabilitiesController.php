@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Api\Master;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Models\lead_probabilities;
+use App\Http\Resources\PostResource;
 
 class LeadProbabilitiesController extends Controller
 {
@@ -12,15 +14,16 @@ class LeadProbabilitiesController extends Controller
      */
     public function index()
     {
-        //
-    }
+        try {
+            $data = lead_probabilities::all();
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
+            return new PostResource(true, 'List Data Lead Probabilities', $data);
+        } catch (\Throwable $th) {
+            return response()->json([
+                'error' => 'Internal Server Error',
+                'message' => $th->getMessage(),
+            ], 500);
+        }
     }
 
     /**
@@ -28,38 +31,89 @@ class LeadProbabilitiesController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        try {
+            $data = lead_probabilities::create($request->all());
+
+            return new PostResource(true, 'Success save data', $data);
+        } catch (\Throwable $th) {
+            return response()->json([
+                'error' => 'Internal Server Error',
+                'message' => $th->getMessage(),
+            ], 500);
+        }
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show($id)
     {
-        //
-    }
+        try {
+            $data = lead_probabilities::find($id);
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
+            if (!$data) {
+                return response()->json([
+                    'error' => 'Data not found',
+                ], 404);
+            }
+
+            return new PostResource(true, 'Detail Data Lead Probabilities', $data);
+        } catch (\Throwable $th) {
+            return response()->json([
+                'error' => 'Internal Server Error',
+                'message' => $th->getMessage(),
+            ], 500);
+        }
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, $id)
     {
-        //
+        try {
+            $data = lead_probabilities::find($id);
+
+            if (!$data) {
+                return response()->json([
+                    'error' => 'Data not found',
+                ], 404);
+            }
+
+            $data->update($request->all());
+
+            return new PostResource(true, 'Success update data', $data);
+        } catch (\Throwable $th) {
+            return response()->json([
+                'error' => 'Internal Server Error',
+                'message' => $th->getMessage(),
+            ], 500);
+        }
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy($id)
     {
-        //
+        try {
+            $data = lead_probabilities::find($id);
+
+            if (!$data) {
+                return response()->json([
+                    'error' => 'Data not found',
+                ], 404);
+            }
+
+            $data->delete();
+
+            return new PostResource(true, 'Success delete data', null);
+        } catch (\Throwable $th) {
+            return response()->json([
+                'error' => 'Internal Server Error',
+                'message' => $th->getMessage(),
+            ], 500);
+        }
     }
 }
+
