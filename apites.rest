@@ -34,3 +34,22 @@ GET http://localhost:8000/api/lead_medias HTTP/1.1
 Content-Type: application/json
 Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vbG9jYWxob3N0OjgwMDAvYXBpL2F1dGgvbG9naW4iLCJpYXQiOjE3MjEyODI3MjYsImV4cCI6MTcyMTI4NjMyNiwibmJmIjoxNzIxMjgyNzI2LCJqdGkiOiJkdlRJYlR0ajlpaVNpWll2Iiwic3ViIjoiMSIsInBydiI6IjIzYmQ1Yzg5NDlmNjAwYWRiMzllNzAxYzQwMDg3MmRiN2E1OTc2ZjcifQ.cccKmwA2kIPyKeqjhYMAPNNZjh8OFnhgXd8djnycjv0
 
+###
+POST http://localhost:8000/api/leads HTTP/1.1
+Content-Type: application/json
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vbG9jYWxob3N0OjgwMDAvYXBpL2F1dGgvbG9naW4iLCJpYXQiOjE3MjEzMTA3MTksImV4cCI6MTcyMTMxNDMxOSwibmJmIjoxNzIxMzEwNzE5LCJqdGkiOiJkYkFKU2MwenhzRkZYVHJMIiwic3ViIjoiMSIsInBydiI6IjIzYmQ1Yzg5NDlmNjAwYWRiMzllNzAxYzQwMDg3MmRiN2E1OTc2ZjcifQ.DfKZQKQuEChofgRSoPBoRKhdg5KQXaEhULABU5lKSBw
+
+{
+    "branch_office": "string",
+    "fullname": "string",
+    "email": "string",
+    "phone": "string",
+    "address": "string",
+    "status": 1,
+    "probability": 1,
+    "lead_type": 1,
+    "lead_channel": 1,
+    "lead_media": 1,
+    "lead_source": 1,
+    "general_notes": "string"
+}
