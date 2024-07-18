@@ -11,7 +11,9 @@ class lead_sources extends Model
 
     protected $guarded = [];
 
-    public function lead_media(){
-        return $this->hasMany(lead_medias::class, 'media_id');
+    public function media()
+    {
+        return $this->belongsTo(lead_medias::class, 'channel_id');
     }
+
 }
