@@ -13,7 +13,7 @@ class leads extends Model
 
     public function lead_status()
     {
-        return $this->belongsTo(lead_statuses::class, 'lead_status');
+        return $this->belongsTo(lead_statuses::class, 'status');
     }
 
     public function lead_probability()
