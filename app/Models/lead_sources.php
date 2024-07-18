@@ -13,7 +13,7 @@ class lead_sources extends Model
 
     public function media()
     {
-        return $this->belongsTo(lead_medias::class, 'channel_id');
+        return $this->belongsTo(lead_medias::class, 'media_id');
     }
 
 }

@@ -15,7 +15,7 @@ class LeadSourcesController extends Controller
     public function index()
     {
         try {
-            $data = lead_sources::with('lead_media')->get();
+            $data = lead_sources::with('media')->get();
             return new PostResource(true, 'Success fetch data', $data);
         } catch (\Throwable $th) {
             return response()->json([
