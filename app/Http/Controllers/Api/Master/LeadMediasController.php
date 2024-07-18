@@ -15,8 +15,8 @@ class LeadMediasController extends Controller
     public function index()
     {
         try {
-            $leadMedias = lead_medias::all();
-            return PostResource::collection($leadMedias);
+            $leadMedias = lead_medias::with('channel')->get();
+            return new PostResource(true, 'Lead Media', $leadMedias);
         } catch (\Throwable $th) {
             return response()->json([
                 'error' => 'Internal Server Error',
