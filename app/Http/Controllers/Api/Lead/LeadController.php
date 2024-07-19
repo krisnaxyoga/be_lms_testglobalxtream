@@ -34,23 +34,9 @@ class LeadController extends Controller
     public function store(Request $request)
     {
         try {
-            $validatedData = $request->validate([
-                'branch_office' => 'string|nullable',
-                'fullname' => 'string|nullable',
-                'email' => 'string|nullable',
-                'phone' => 'string|nullable',
-                'address' => 'string|nullable',
-                'status' => 'integer|nullable',
-                'probability' => 'integer|nullable',
-                'lead_type' => 'integer|nullable',
-                'lead_channel' => 'integer|nullable',
-                'lead_media' => 'integer|nullable',
-                'lead_source' => 'integer|nullable',
-                'general_notes' => 'string|nullable',
-                'lead_number' => 'string|nullable',
-            ]);
-
-            $data = leads::create($validatedData);
+            $input = $request->all();
+            $input['lead_number'] = $input['lead_number'] ?? 'LD' . substr(str_shuffle("0123456789"), 0, 9);
+            $data = leads::create($input);
 
             return new PostResource(true, 'Data Added Successfully', $data);
         } catch (\Throwable $th) {
@@ -99,7 +85,6 @@ class LeadController extends Controller
                 'lead_media' => 'integer|nullable',
                 'lead_source' => 'integer|nullable',
                 'general_notes' => 'string|nullable',
-                'lead_number' => 'string|nullable',
             ]);
 
             $data = leads::where('id', $id)->update($validatedData);
