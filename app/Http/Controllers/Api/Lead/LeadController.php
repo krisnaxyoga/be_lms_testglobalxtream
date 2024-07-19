@@ -47,6 +47,7 @@ class LeadController extends Controller
                 'lead_media' => 'integer|nullable',
                 'lead_source' => 'integer|nullable',
                 'general_notes' => 'string|nullable',
+                'lead_number' => 'string|nullable',
             ]);
 
             $data = leads::create($validatedData);
@@ -98,6 +99,7 @@ class LeadController extends Controller
                 'lead_media' => 'integer|nullable',
                 'lead_source' => 'integer|nullable',
                 'general_notes' => 'string|nullable',
+                'lead_number' => 'string|nullable',
             ]);
 
             $data = leads::where('id', $id)->update($validatedData);
