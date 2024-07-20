@@ -10,6 +10,16 @@ Content-Type: application/json
     "password": "password"
 }
 
+### response
+POST http://localhost:8000/api/auth/me
+Content-Type: application/json
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vbG9jYWxob3N0OjgwMDAvYXBpL2F1dGgvbG9naW4iLCJpYXQiOjE3MjE0NDc2MzQsImV4cCI6MTcyMTQ1MTIzNCwibmJmIjoxNzIxNDQ3NjM0LCJqdGkiOiJIU0hkV0dvaFZ4ZWJuNVRZIiwic3ViIjoiMSIsInBydiI6IjIzYmQ1Yzg5NDlmNjAwYWRiMzllNzAxYzQwMDg3MmRiN2E1OTc2ZjcifQ.qsI1Cw2OPGhCX1E32Th-zECFYjzFv0qK-dT3TCzreU8
+
+### response
+POST http://localhost:8000/api/auth/refresh
+Content-Type: application/json
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vbG9jYWxob3N0OjgwMDAvYXBpL2F1dGgvbG9naW4iLCJpYXQiOjE3MjE0NDc2MzQsImV4cCI6MTcyMTQ1MTIzNCwibmJmIjoxNzIxNDQ3NjM0LCJqdGkiOiJIU0hkV0dvaFZ4ZWJuNVRZIiwic3ViIjoiMSIsInBydiI6IjIzYmQ1Yzg5NDlmNjAwYWRiMzllNzAxYzQwMDg3MmRiN2E1OTc2ZjcifQ.qsI1Cw2OPGhCX1E32Th-zECFYjzFv0qK-dT3TCzreU8
+
 #### Response
 POST http://localhost:8000/api/auth/logout HTTP/1.1
 Content-Type: application/json

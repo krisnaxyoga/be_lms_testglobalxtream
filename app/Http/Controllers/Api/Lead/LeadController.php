@@ -9,14 +9,41 @@ use App\Http\Resources\PostResource;
 
 class LeadController extends Controller
 {
-     /**
+    /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
         try {
-            $data = leads::with('lead_status', 'lead_probability', 'lead_type', 'lead_channel', 'lead_media', 'lead_source')->get();
-            //return collection of data as a resource
+            $query = leads::with('lead_status', 'lead_probability', 'lead_type', 'lead_channel', 'lead_media', 'lead_source');
+
+            if ($request->has('searchText') && !empty($request->searchText)) {
+                $query->where(function ($q) use ($request) {
+                    $q->where('fullname', 'like', '%' . $request->searchText . '%')
+                        ->orWhere('lead_number', 'like', '%' . $request->searchText . '%');
+                });
+            }
+
+            if ($request->has('dateFrom') && !empty($request->dateFrom)) {
+                $query->whereDate('created_at', '>=', $request->dateFrom);
+            }
+
+            if ($request->has('dateTo') && !empty($request->dateTo)) {
+                $query->whereDate('created_at', '<=', $request->dateTo);
+            }
+
+            if ($request->has('status') && !empty($request->status)) {
+                $query->whereHas('lead_status', function ($q) use ($request) {
+                    $q->where('name', $request->status);
+                });
+            }
+
+            if ($request->has('branchOffice') && !empty($request->branchOffice)) {
+                $query->where('branch_office', $request->branchOffice);
+            }
+
+            $data = $query->get();
+
             return new PostResource(true, 'List Data User', $data);
         } catch (\Throwable $th) {
             return response()->json([
@@ -24,7 +51,6 @@ class LeadController extends Controller
                 'message' => $th->getMessage(),
             ], 500);
         }
-
     }
 
 
@@ -45,7 +71,6 @@ class LeadController extends Controller
                 'message' => $th->getMessage(),
             ], 500);
         }
-
     }
 
     /**
@@ -63,7 +88,6 @@ class LeadController extends Controller
                 'message' => $th->getMessage(),
             ], 500);
         }
-
     }
 
     /**
@@ -96,7 +120,6 @@ class LeadController extends Controller
                 'message' => $th->getMessage(),
             ], 500);
         }
-
     }
 
     /**
@@ -114,6 +137,5 @@ class LeadController extends Controller
                 'message' => $th->getMessage(),
             ], 500);
         }
-
     }
 }
