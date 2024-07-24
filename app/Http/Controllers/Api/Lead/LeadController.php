@@ -15,7 +15,7 @@ class LeadController extends Controller
     public function index(Request $request)
     {
         try {
-            $query = leads::with('lead_status', 'lead_probability', 'lead_type', 'lead_channel', 'lead_media', 'lead_source');
+            $query = leads::with('lead_status', 'lead_probability', 'type', 'channel', 'media', 'source');
 
             if ($request->has('searchText') && !empty($request->searchText)) {
                 $query->where(function ($q) use ($request) {
@@ -79,7 +79,7 @@ class LeadController extends Controller
     public function show(string $id)
     {
         try {
-            $data = leads::with('lead_status', 'lead_probability', 'lead_type', 'lead_channel', 'lead_media', 'lead_source')->find($id);
+            $data = leads::with('lead_status', 'lead_probability', 'type', 'channel', 'media', 'source')->find($id);
 
             return new PostResource(true, 'Data Detail', $data);
         } catch (\Throwable $th) {

@@ -21,22 +21,22 @@ class leads extends Model
         return $this->belongsTo(lead_probabilities::class, 'probability');
     }
 
-    public function lead_type()
+    public function type()
     {
         return $this->belongsTo(lead_types::class, 'lead_type');
     }
 
-    public function lead_channel()
+    public function channel()
     {
         return $this->belongsTo(lead_channels::class, 'lead_channel');
     }
 
-    public function lead_media()
+    public function media()
     {
         return $this->belongsTo(lead_medias::class, 'lead_media');
     }
 
-    public function lead_source()
+    public function source()
     {
         return $this->belongsTo(lead_sources::class, 'lead_source');
     }
